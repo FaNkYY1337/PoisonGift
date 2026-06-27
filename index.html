@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Crypto Wheel</title>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: radial-gradient(circle, #1a1a2e, #0f0f1b);
+            color: #fff;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            overflow: hidden;
+            -webkit-user-select: none;
+            user-select: none;
+        }
+
+        .container {
+            text-align: center;
+            width: 100%;
+            max-width: 400px;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        h1 {
+            font-size: 24px;
+            margin-bottom: 10px;
+            color: #00ffff;
+            text-shadow: 0 0 10px rgba(0,255,255,0.5);
+        }
+
+        .wheel-container {
+            position: relative;
+            width: 300px;
+            height: 300px;
+            margin: 30px auto;
+        }
+
+        .wheel {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            border: 8px solid #00ffff;
+            box-shadow: 0 0 20px rgba(0,255,255,0.3);
+            background: conic-gradient(
+                #ff0055 0deg 60deg,
+                #00ff66 60deg 120deg,
+                #0055ff 120deg 180deg,
+                #ffcc00 180deg 240deg,
+                #9900ff 240deg 300deg,
+                #ff6600 300deg 360deg
+            );
+            transition: transform 4s cubic-bezier(0.1, 0.8, 0.1, 1);
+        }
+
+        .pointer {
+            position: absolute;
+            top: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 0;
+            border-left: 15px solid transparent;
+            border-right: 15px solid transparent;
+            border-top: 30px solid #ffffff;
+            filter: drop-shadow(0 2px 5px rgba(0,0,0,0.5));
+            z-index: 10;
+        }
+
+        .btn {
+            background: linear-gradient(45deg, #00ffff, #0055ff);
+            border: none;
+            color: white;
+            padding: 15px 40px;
+            font-size: 18px;
+            font-weight: bold;
+            border-radius: 30px;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0,255,255,0.4);
+            transition: transform 0.2s, opacity 0.2s;
+            margin-top: 20px;
+        }
+
+        .btn:active {
+            transform: scale(0.95);
+        }
+
+        .btn:disabled {
+            background: #444;
+            box-shadow: none;
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        /* Админ-панель */
+        #admin-panel {
+            display: none;
+            margin-top: 20px;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 15px;
+            border-radius: 15px;
+            border: 1px solid rgba(0,255,255,0.2);
+            width: 100%;
+        }
+
+        select, input {
+            background: #222;
+            color: white;
+            border: 1px solid #444;
+            padding: 10px;
+            margin: 5px 0;
+            width: 100%;
+            border-radius: 8px;
+            box-sizing: border-box;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1 id="status-text">Испытай удачу!</h1>
+        
+        <div class="wheel-container">
+            <div class="pointer"></div>
+            <div class="wheel" id="wheel"></div>
+        </div>
+
+        <button class="btn" id="spin-btn" onclick="startSpin()">КРУТИТЬ</button>
+
+        <!-- Админка скрыта по умолчанию -->
+        <div id="admin-panel">
+            <h3>⚙️ Управление подкруткой</h3>
+            <label for="next-win">Что выпадет следующему игроку:</label>
+            <select id="next-win">
+                <option value="0">Случайно (Честная игра)</option>
+                <option value="1">🔥 СУПЕР-ПРИЗ!</option>
+                <option value="2">Пусто</option>
+                <option value="3">Попробуй еще раз</option>
+            </select>
+            <button class="btn" style="padding: 8px 20px; font-size: 14px;" onclick="saveSettings()">Применить</button>
+        </div>
+    </div>
+
+    <script>
+        const tg = window.Telegram.WebApp;
+        tg.expand(); // Расширяем на весь экран
+
+        // --- ТВОИ НАСТРОЙКИ ---
+        const ADMIN_ID = 913324178; // Твой проверенный ID
+        const BOT_API_URL = 'https://poisongift.onrender.com'; // Сюда позже вставим ссылку от Render
+        // ----------------------
+
+        const userId = tg.initDataUnsafe?.user?.id || 0;
+        const username = tg.initDataUnsafe?.user?.username || 'Игрок';
+        let canSpin = true;
+
+        // Включаем админку, если зашел ты
+        if (userId === ADMIN_ID) {
+            document.getElementById('admin-panel').style.display = 'block';
+        }
+
+        // Сектора колеса на градусах
+        const prizes = [
+            { name: "СУПЕР-ПРИЗ!", deg: 30 },
+            { name: "Ой, пусто!", deg: 90 },
+            { name: "Попробуй еще раз", deg: 150 },
+            { name: "Приз 2-го уровня", deg: 210 },
+            { name: "Бонус +100", deg: 270 },
+            { name: "Увы, мимо", deg: 330 }
+        ];
+
+        function startSpin() {
+            if (!canSpin) return;
+            canSpin = false;
+            document.getElementById('spin-btn').disabled = true;
+
+            // Запрашиваем у сервера, что должно выпасть (учитывая подкрутку)
+            fetch(`${BOT_API_URL}/get_spin?user_id=${userId}`)
+                .then(res => res.json())
+                .then(data => {
+                    let targetDeg = 0;
+                    
+                    if (data.forced_prize) {
+                        // Если админ подкрутил
+                        const prize = prizes.find(p => p.name === data.forced_prize);
+                        targetDeg = prize ? prize.deg : Math.floor(Math.random() * 360);
+                    } else {
+                        // Если честная игра
+                        targetDeg = Math.floor(Math.random() * 360);
+                    }
+
+                    // Считаем финальный поворот (минимум 5 полных кругов + нужный градус)
+                    const totalRotation = 1800 + (360 - targetDeg);
+                    const wheel = document.getElementById('wheel');
+                    wheel.style.transform = `rotate(${totalRotation}deg)`;
+
+                    setTimeout(() => {
+                        // Определяем какой сектор в итоге сверху
+                        const actualDeg = totalRotation % 360;
+                        let wonPrize = "Что-то пошло не так";
+                        
+                        // Ищем подходящий сектор
+                        for (let p of prizes) {
+                            if (Math.abs((360 - actualDeg) - p.deg) <= 30 || Math.abs((360 - actualDeg) - p.deg) >= 330) {
+                                wonPrize = p.name;
+                                break;
+                            }
+                        }
+
+                        document.getElementById('status-text').innerText = `Выпало: ${wonPrize}`;
+                        
+                        // Отправляем результат боту, чтобы он прислал юзеру сообщение с нужной картинкой
+                        fetch(`${BOT_API_URL}/result`, {
+                            method: 'POST',
+                            headers: {'Content-Type': 'application/json'},
+                            body: JSON.stringify({
+                                user_id: userId,
+                                username: username,
+                                prize: wonPrize
+                            })
+                        });
+
+                    }, 4000);
+                })
+                .catch(() => {
+                    alert('Ошибка связи с сервером бота!');
+                    canSpin = true;
+                    document.getElementById('spin-btn').disabled = false;
+                });
+        }
+
+        function saveSettings() {
+            const select = document.getElementById('next-win');
+            const value = select.options[select.selectedIndex].text;
+
+            fetch(`${BOT_API_URL}/set_admin_settings`, {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({
+                    admin_id: userId,
+                    next_prize: select.value === "0" ? null : value
+                })
+            }).then(res => {
+                if (res.ok) alert('Настройки подкрутки сохранены!');
+                else alert('Ошибка изменения настроек.');
+            });
+        }
+    </script>
+</body>
+</html>
