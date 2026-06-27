@@ -1,0 +1,1856 @@
+Сотрите это перед использованием.
+Ознакомьтесь с файлом main.py и этим перед использованием, это важно!
+При повторном сливе, указывать автора: @x3layka или в телеграм: @coderingonelove (Отличительный знак: Ориг акк имеет табличку SCAM.)
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GiftRunner</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Oswald:wght@700&display=swap');
+
+        :root {
+            --color-super-legendary: #000;
+            --color-legendary: #ffc107;
+            --color-epic: #9c27b0;
+            --color-rare: #2196f3;
+            --color-unusual: #3498db;
+            --color-common: #a4a4a4;
+            --color-background: #121212;
+            --color-text: #e0e0e0;
+            --color-button: #4caf50;
+            --color-button-hover: #43a047;
+            --color-button-shadow: rgba(76, 175, 80, 0.4);
+            --color-indicator: #ff0055;
+            --color-card-bg: rgba(255, 255, 255, 0.05);
+            --color-card-border: rgba(255, 255, 255, 0.1);
+            --color-card-shadow: rgba(0, 0, 0, 0.5);
+            --color-card-shine: rgba(255, 255, 255, 0.15);
+            --color-nav-bg: rgba(18, 18, 18, 0.9);
+            --color-super-legendary-text: #fff;
+            --color-legendary-text: #222;
+            --color-epic-text: #fff;
+            --color-rare-text: #fff;
+            --color-unusual-text: #fff;
+            --color-common-text: #222;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background: var(--color-background);
+            background-image: radial-gradient(circle, #222 1px, transparent 1px);
+            background-size: 40px 40px;
+            color: var(--color-text);
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            overflow-x: hidden;
+            box-sizing: border-box;
+        }
+
+        .main-header {
+            width: 100%;
+            background: var(--color-nav-bg);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+            padding: 15px 30px;
+            display: none;
+            justify-content: space-between;
+            align-items: center;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 100;
+            animation: slideDown 0.8s ease-out;
+        }
+
+        @keyframes slideDown {
+            from {
+                transform: translateY(-100%);
+            }
+            to {
+                transform: translateY(0);
+            }
+        }
+
+        .logo-section {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logo-section img {
+            height: 50px;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .logo-section img:hover {
+            transform: scale(1.1);
+        }
+
+        .logo-section h1 {
+            font-family: 'Oswald', sans-serif;
+            font-size: 2em;
+            margin: 0;
+            color: #fff;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+            letter-spacing: 2px;
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 30px;
+        }
+
+        .nav-menu a {
+            color: var(--color-text);
+            text-decoration: none;
+            font-size: 1.1em;
+            font-weight: bold;
+            transition: color 0.3s, transform 0.2s;
+            position: relative;
+        }
+
+        .nav-menu a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background-color: var(--color-button);
+            transform: scaleX(0);
+            transform-origin: bottom right;
+            transition: transform 0.3s ease-out;
+        }
+
+        .nav-menu a:hover {
+            color: var(--color-button);
+            transform: translateY(-2px);
+        }
+
+        .nav-menu a:hover::after {
+            transform: scaleX(1);
+            transform-origin: bottom left;
+        }
+
+        .balance-info {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 10px 20px;
+            border-radius: 50px;
+            font-size: 1.2em;
+            font-weight: bold;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+            display: none;
+            align-items: center;
+            gap: 8px;
+            transition: transform 0.3s ease;
+        }
+
+        .balance-info:hover {
+            transform: scale(1.05);
+        }
+
+        .balance-info span {
+            color: var(--color-button);
+        }
+
+        .container {
+            width: 95%;
+            max-width: 1400px;
+            text-align: center;
+            padding-top: 100px;
+            padding-bottom: 50px;
+            animation: fadeIn 1s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .content-section {
+            display: none;
+            width: 100%;
+            min-height: calc(100vh - 150px);
+            padding-top: 20px;
+        }
+
+        h1 {
+            font-family: 'Oswald', sans-serif;
+            font-size: 3.5em;
+            margin-bottom: 20px;
+            letter-spacing: 2px;
+            text-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
+        }
+
+        h2 {
+            font-family: 'Oswald', sans-serif;
+            font-size: 2.5em;
+            margin-bottom: 20px;
+            text-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
+        }
+
+        .auth-container {
+            background: var(--color-card-bg);
+            border: 1px solid var(--color-card-border);
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px var(--color-card-shadow);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+            max-width: 450px;
+            margin: auto;
+            animation: fadeIn 0.8s;
+        }
+
+        .auth-container input {
+            width: 100%;
+            padding: 15px;
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--color-text);
+            font-size: 1.1em;
+            outline: none;
+            transition: background 0.3s, border-color 0.3s;
+        }
+
+        .auth-container input:focus {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: var(--color-button);
+        }
+
+        .auth-button {
+            width: 100%;
+            padding: 18px;
+            border: none;
+            border-radius: 10px;
+            background-color: var(--color-button);
+            color: #fff;
+            font-size: 1.3em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s, transform 0.2s, box-shadow 0.3s;
+            box-shadow: 0 5px 15px var(--color-button-shadow);
+        }
+
+        .auth-button:hover {
+            background-color: var(--color-button-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px var(--color-button-shadow);
+        }
+
+        .case-gallery {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 40px;
+            padding: 30px 0;
+        }
+
+        .case-card {
+            background: var(--color-card-bg);
+            border: 1px solid var(--color-card-border);
+            border-radius: 20px;
+            padding: 25px;
+            text-align: center;
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s;
+            max-width: 300px;
+            box-shadow: 0 8px 25px var(--color-card-shadow);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .case-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, rgba(255,255,255,0.05) 25%, transparent 25%, transparent 50%, rgba(255,255,255,0.05) 50%, rgba(255,255,255,0.05) 75%, transparent 75%, transparent);
+            background-size: 20px 20px;
+            opacity: 0.2;
+        }
+
+        .case-card:hover {
+            transform: translateY(-10px) scale(1.03);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6);
+            border-color: var(--color-button);
+        }
+
+        .case-card img {
+            width: 80%;
+            height: auto;
+            border-radius: 15px;
+            margin-bottom: 15px;
+            transition: transform 0.3s ease;
+        }
+
+        .case-card:hover img {
+            transform: scale(1.05);
+        }
+
+        .case-card h3 {
+            font-family: 'Oswald', sans-serif;
+            font-size: 1.8em;
+            margin: 10px 0;
+            color: #fff;
+        }
+
+        .case-card p {
+            font-size: 1.3em;
+            font-weight: bold;
+            color: var(--color-button);
+            text-shadow: 0 0 5px rgba(76, 175, 80, 0.5);
+        }
+
+        .roulette-section {
+            display: none;
+            width: 100%;
+        }
+
+        .roulette-container {
+            position: relative;
+            width: 100%;
+            height: 250px;
+            overflow: hidden;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 20px;
+            box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.7), 0 10px 30px rgba(0, 0, 0, 0.4);
+            margin-bottom: 40px;
+            border: 2px solid var(--color-card-border);
+        }
+
+        .roulette-items {
+            display: flex;
+            height: 100%;
+            align-items: center;
+            transition: transform 6s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+
+        .item-card {
+            min-width: 200px;
+            height: 200px;
+            margin: 0 10px;
+            border-radius: 15px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            border: 2px solid var(--color-card-border);
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+            box-shadow: 0 5px 15px var(--color-card-shadow);
+            flex-shrink: 0;
+        }
+
+        .item-card::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--color-card-shine);
+            opacity: 0;
+            transition: opacity 0.3s ease-in-out;
+        }
+
+        .item-card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.6);
+        }
+
+        .item-card:hover::after {
+            opacity: 1;
+        }
+
+        .item-card.super-legendary {
+            background: var(--color-super-legendary);
+        }
+
+        .item-card.legendary {
+            background: var(--color-legendary);
+        }
+
+        .item-card.epic {
+            background: var(--color-epic);
+        }
+
+        .item-card.rare {
+            background: var(--color-rare);
+        }
+
+        .item-card.unusual {
+            background: var(--color-unusual);
+        }
+
+        .item-card.common {
+            background: var(--color-common);
+        }
+
+        .item-card .item-name,
+        .item-card .item-price {
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+        }
+
+        .item-card.super-legendary .item-name,
+        .item-card.super-legendary .item-price,
+        .item-card.epic .item-name,
+        .item-card.epic .item-price,
+        .item-card.rare .item-name,
+        .item-card.rare .item-price,
+        .item-card.unusual .item-name,
+        .item-card.unusual .item-price {
+            color: var(--color-text);
+        }
+
+        .item-card.legendary .item-name,
+        .item-card.legendary .item-price,
+        .item-card.common .item-name,
+        .item-card.common .item-price {
+            color: var(--color-legendary-text);
+        }
+
+        .item-gif {
+            width: 120px;
+            height: 120px;
+            object-fit: contain;
+            filter: drop-shadow(0 0 8px rgba(0, 0, 0, 0.4));
+        }
+
+        .item-name {
+            font-size: 1.3em;
+            font-weight: bold;
+            margin-top: 10px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .item-price {
+            font-size: 1.1em;
+            margin-top: 5px;
+        }
+
+        .indicator {
+            position: absolute;
+            left: 50%;
+            top: 0;
+            bottom: 0;
+            width: 4px;
+            background-color: var(--color-indicator);
+            transform: translateX(-50%);
+            z-index: 10;
+            box-shadow: 0 0 15px var(--color-indicator);
+        }
+
+        .open-button {
+            padding: 20px 50px;
+            font-size: 1.6em;
+            font-weight: bold;
+            color: #fff;
+            background-color: var(--color-button);
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: transform 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 10px 20px var(--color-button-shadow);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .open-button:hover {
+            background-color: var(--color-button-hover);
+            transform: translateY(-5px) scale(1.02);
+            box-shadow: 0 15px 30px var(--color-button-shadow);
+        }
+
+        .open-button:disabled {
+            background-color: #555;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .back-button {
+            padding: 10px 25px;
+            font-size: 1.1em;
+            color: var(--color-text);
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 50px;
+            cursor: pointer;
+            transition: background 0.3s, transform 0.2s;
+            margin-bottom: 20px;
+            text-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+        }
+
+        .back-button:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateX(-5px);
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 20;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(5px);
+            justify-content: center;
+            align-items: center;
+            animation: modalFadeIn 0.5s;
+        }
+
+        .modal-content {
+            padding: 40px;
+            border-radius: 20px;
+            text-align: center;
+            position: relative;
+            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.7);
+            animation: zoomIn 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+            border: 3px solid #fff;
+        }
+
+        .modal-super-legendary {
+            background: linear-gradient(135deg, #000, #333);
+            border-color: #ff0055;
+        }
+
+        .modal-legendary {
+            background: linear-gradient(135deg, #ffc107, #d4a71c);
+            border-color: #ffc107;
+        }
+
+        .modal-epic {
+            background: linear-gradient(135deg, #9c27b0, #7b1fa2);
+            border-color: #9c27b0;
+        }
+
+        .modal-rare {
+            background: linear-gradient(135deg, #2196f3, #1976d2);
+            border-color: #2196f3;
+        }
+
+        .modal-unusual {
+            background: linear-gradient(135deg, #3498db, #2980b9);
+            border-color: #3498db;
+        }
+
+        .modal-common {
+            background: linear-gradient(135deg, #a4a4a4, #8c8c8c);
+            border-color: #a4a4a4;
+        }
+
+        .modal-content .item-gif {
+            width: 180px;
+            height: 180px;
+            margin-bottom: 20px;
+        }
+
+        .modal-content h2 {
+            font-size: 2.2em;
+            font-weight: bold;
+            margin: 0;
+            text-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+        }
+
+        .modal-content p {
+            font-size: 1.5em;
+            margin-top: 10px;
+            font-weight: 500;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            color: var(--color-text);
+            font-size: 36px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.2s ease, color 0.2s;
+        }
+
+        .modal-close:hover {
+            transform: scale(1.2) rotate(90deg);
+            color: #fff;
+        }
+
+        .item-list-container {
+            width: 100%;
+            max-width: 1000px;
+            margin-top: 50px;
+            padding: 30px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 20px;
+            box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.7), 0 10px 30px rgba(0, 0, 0, 0.4);
+            border: 2px solid var(--color-card-border);
+            text-align: left;
+            animation: fadeIn 1s ease-out;
+        }
+
+        .item-list-container h2 {
+            text-align: center;
+            font-family: 'Oswald', sans-serif;
+            font-size: 2.5em;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .chances-list {
+            list-style: none;
+            padding: 0;
+            margin: 0 auto 20px;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .chances-list li {
+            font-size: 1.2em;
+            font-weight: bold;
+            text-shadow: 0 0 5px rgba(0, 0, 0, 0.4);
+            transition: transform 0.2s ease;
+        }
+
+        .chances-list li:hover {
+            transform: scale(1.05);
+        }
+
+        .chance-super-legendary {
+            color: #ff0055;
+        }
+
+        .chance-legendary {
+            color: var(--color-legendary);
+        }
+
+        .chance-epic {
+            color: var(--color-epic);
+        }
+
+        .chance-rare {
+            color: var(--color-rare);
+        }
+
+        .chance-unusual {
+            color: var(--color-unusual);
+        }
+
+        .chance-common {
+            color: var(--color-common);
+        }
+
+        .item-list-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            gap: 25px;
+            justify-items: center;
+        }
+
+        .item-list-card {
+            width: 100%;
+            height: auto;
+            min-height: 180px;
+            padding: 15px;
+            box-sizing: border-box;
+            border-radius: 15px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            border: 2px solid var(--color-card-border);
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 5px 15px var(--color-card-shadow);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .item-list-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
+        }
+
+        .item-list-card.super-legendary {
+            background: linear-gradient(135deg, #000, #333);
+        }
+
+        .item-list-card.legendary {
+            background: linear-gradient(135deg, #ffc107, #d4a71c);
+        }
+
+        .item-list-card.epic {
+            background: linear-gradient(135deg, #9c27b0, #7b1fa2);
+        }
+
+        .item-list-card.rare {
+            background: linear-gradient(135deg, #2196f3, #1976d2);
+        }
+
+        .item-list-card.unusual {
+            background: linear-gradient(135deg, #3498db, #2980b9);
+        }
+
+        .item-list-card.common {
+            background: linear-gradient(135deg, #a4a4a4, #8c8c8c);
+        }
+
+        .item-list-card .item-gif {
+            width: 80px;
+            height: 80px;
+        }
+
+        .item-list-card .item-name {
+            font-size: 1em;
+            font-weight: bold;
+            margin-top: 5px;
+        }
+
+        .item-list-card .item-price {
+            font-size: 0.9em;
+            margin-top: 2px;
+        }
+
+        .item-list-card .item-chance {
+            font-size: 0.9em;
+            font-weight: 500;
+            color: #fff;
+            background: rgba(0, 0, 0, 0.4);
+            border-radius: 5px;
+            padding: 2px 8px;
+            margin-top: 5px;
+        }
+
+        .welcome-message {
+            display: none;
+            text-align: center;
+            padding: 50px;
+        }
+
+        @media (max-width: 768px) {
+            .main-header {
+                padding: 10px 20px;
+                flex-direction: column;
+                gap: 10px;
+                text-align: center;
+            }
+
+            .nav-menu {
+                gap: 15px;
+                font-size: 0.9em;
+            }
+
+            .logo-section {
+                flex-direction: column;
+            }
+
+            .logo-section img {
+                height: 40px;
+            }
+
+            h1 {
+                font-size: 2.5em;
+            }
+
+            h2 {
+                font-size: 2em;
+            }
+
+            .case-gallery {
+                gap: 20px;
+            }
+
+            .case-card {
+                max-width: 250px;
+            }
+
+            .roulette-container {
+                height: 200px;
+            }
+
+            .item-card {
+                min-width: 150px;
+                height: 150px;
+            }
+
+            .item-gif {
+                width: 100px;
+                height: 100px;
+            }
+
+            .open-button {
+                padding: 15px 30px;
+                font-size: 1.4em;
+            }
+
+            .item-list-container {
+                padding: 20px;
+            }
+
+            .item-list-grid {
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+                gap: 15px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .main-header {
+                padding: 10px;
+            }
+
+            .logo-section h1 {
+                font-size: 1.5em;
+            }
+
+            .nav-menu {
+                gap: 10px;
+                font-size: 0.8em;
+            }
+
+            h1 {
+                font-size: 2em;
+            }
+
+            h2 {
+                font-size: 1.5em;
+            }
+
+            .case-gallery {
+                flex-direction: column;
+                align-items: center;
+                gap: 15px;
+            }
+
+            .roulette-container {
+                height: 150px;
+            }
+
+            .item-card {
+                min-width: 120px;
+                height: 120px;
+            }
+
+            .item-gif {
+                width: 80px;
+                height: 80px;
+            }
+
+            .open-button {
+                padding: 10px 20px;
+                font-size: 1.2em;
+            }
+
+            .modal-content {
+                padding: 20px;
+            }
+
+            .modal-content .item-gif {
+                width: 100px;
+                height: 100px;
+            }
+
+            .modal-content h2 {
+                font-size: 1.5em;
+            }
+
+            .modal-content p {
+                font-size: 1.1em;
+            }
+
+            .item-list-grid {
+                grid-template-columns: 1fr;
+                gap: 10px;
+            }
+        }
+
+        .profile-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 30px;
+            background: rgba(0, 0, 0, 0.3);
+            border: 2px solid var(--color-card-border);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+        }
+
+        .profile-header {
+            display: flex;
+            align-items: center;
+            gap: 30px;
+            width: 100%;
+            justify-content: center;
+        }
+
+        .profile-picture {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            border: 4px solid var(--color-button);
+            box-shadow: 0 0 15px rgba(76, 175, 80, 0.5);
+        }
+
+        .profile-info {
+            text-align: left;
+        }
+
+        .profile-info p {
+            font-size: 1.2em;
+            margin: 5px 0;
+            line-height: 1.5;
+        }
+
+        .profile-info span {
+            font-weight: bold;
+            color: var(--color-button);
+        }
+
+        .profile-stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            width: 100%;
+            max-width: 800px;
+        }
+
+        .stat-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+            transition: transform 0.2s;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .stat-card h4 {
+            font-family: 'Oswald', sans-serif;
+            font-size: 1.5em;
+            margin: 0 0 10px;
+            color: var(--color-button);
+        }
+
+        .stat-card p {
+            font-size: 1.1em;
+            margin: 0;
+        }
+
+        .inventory-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            gap: 25px;
+            justify-items: center;
+            padding-top: 20px;
+        }
+        
+        .admin-section, .event-section {
+            display: none;
+            width: 100%;
+            max-width: 800px;
+            padding: 30px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+            border: 2px solid var(--color-card-border);
+            margin-top: 50px;
+            animation: fadeIn 1s ease-out;
+        }
+        
+        .admin-section h2, .event-section h2 {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+        
+        .admin-section form, .admin-section .admin-actions {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .admin-section label {
+            font-size: 1.2em;
+            font-weight: bold;
+            text-align: left;
+        }
+
+        .admin-section input, .admin-section select, .admin-section textarea {
+            width: 100%;
+            padding: 12px;
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--color-text);
+            font-size: 1em;
+        }
+
+        .admin-section button {
+            padding: 15px;
+            border: none;
+            border-radius: 8px;
+            background-color: var(--color-button);
+            color: #fff;
+            font-size: 1.2em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .admin-section button:hover {
+            background-color: var(--color-button-hover);
+        }
+
+        .event-container {
+            position: relative;
+            background: linear-gradient(135deg, #1c1c1c, #333);
+            border-radius: 20px;
+            padding: 25px;
+            text-align: center;
+            box-shadow: 0 0 20px var(--color-event-shadow, rgba(255, 0, 85, 0.5));
+            animation: pulse-border 1.5s infinite alternate;
+            margin-bottom: 30px;
+        }
+
+        .event-container::before {
+            content: 'Событие!';
+            position: absolute;
+            top: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--color-event, #ff0055);
+            color: #fff;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            font-weight: bold;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.4);
+        }
+
+        .event-container h3 {
+            font-family: 'Oswald', sans-serif;
+            font-size: 2em;
+            margin: 0;
+            color: var(--color-event, #ff0055);
+            text-shadow: 0 0 10px rgba(255, 0, 85, 0.4);
+        }
+
+        .event-container p {
+            font-size: 1.1em;
+            margin: 10px 0 0;
+            line-height: 1.5;
+        }
+
+        @keyframes pulse-border {
+            from {
+                border: 2px solid var(--color-event, #ff0055);
+            }
+            to {
+                border: 2px solid transparent;
+            }
+        }
+        
+    </style>
+</head>
+<body>
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+<header class="main-header">
+    <div class="logo-section">
+        <a href="#" id="logo-link">
+            <img src="LogoPanel.png" alt="GiftRunner Logo">
+        </a>
+        <h1 id="project-title">GiftRunner</h1>
+    </div>
+    <nav class="nav-menu">
+        <a href="#" data-section="cases">Кейсы</a>
+        <a href="#" data-section="inventory">Инвентарь</a>
+        <a href="#" data-section="upgrade">Апгрейд</a>
+        <a href="#" data-section="profile">Профиль</a>
+        <a href="#" data-section="admin" id="admin-link" style="display: none;">Админка</a>
+    </nav>
+    <div class="balance-info" id="balance-info">
+        Баланс: <span id="balance-value">0</span> ⭐
+    </div>
+</header>
+
+<div class="container">
+    <div class="welcome-message" id="welcome-message">
+        <h1>Добро пожаловать в GiftRunner!</h1>
+        <p>Пожалуйста, запустите это приложение из Telegram-бота, чтобы авторизоваться и получить доступ.</p>
+    </div>
+    
+    <div class="content-section" id="event-section" style="display: none;">
+        <div class="event-container" id="event-container">
+            <h3 id="event-name"></h3>
+            <p id="event-description"></p>
+            <p id="event-time"></p>
+        </div>
+    </div>
+    
+    <div class="content-section" id="cases-section">
+        <h1 id="cases-title">Выберите кейс</h1>
+        <div class="case-gallery" id="case-gallery"></div>
+    </div>
+
+    <div class="content-section" id="roulette-section">
+        <button class="back-button" id="back-button">← К кейсам</button>
+        <div class="roulette-header">
+            <h1 id="roulette-case-title"></h1>
+        </div>
+
+        <div class="roulette-container">
+            <div class="indicator"></div>
+            <div class="roulette-items"></div>
+        </div>
+
+        <button class="open-button" id="open-btn">Открыть <span id="open-btn-price"></span>⭐</button>
+    </div>
+
+    <div class="content-section" id="inventory-section">
+        <h2>Инвентарь</h2>
+        <p id="inventory-empty-message" style="text-align: center; display: none;">Инвентарь пуст. Откройте кейс, чтобы получить предметы!</p>
+        <div class="inventory-grid" id="inventory-grid"></div>
+    </div>
+
+    <div class="content-section" id="profile-section">
+        <h2 id="profile-title">Профиль</h2>
+        <div class="profile-content">
+            <div class="profile-header">
+                <img id="profile-photo" class="profile-picture" src="default_avatar.png" alt="Профиль">
+                <div class="profile-info">
+                    <p>ID: <span id="profile-id"></span></p>
+                    <p>Имя: <span id="profile-name"></span></p>
+                    <p>Баланс: <span id="profile-balance"></span> ⭐</p>
+                </div>
+            </div>
+            <div class="profile-stats-grid">
+                <div class="stat-card">
+                    <h4>Открыто кейсов</h4>
+                    <p id="stat-cases-opened">0</p>
+                </div>
+                <div class="stat-card">
+                    <h4>Лучший дроп</h4>
+                    <p id="stat-best-drop">Нет</p>
+                </div>
+                <div class="stat-card">
+                    <h4>Любимый кейс</h4>
+                    <p id="stat-favorite-case">Нет</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="content-section" id="admin-section">
+        <h2>Админка</h2>
+        <div class="admin-actions">
+            <form id="balance-form">
+                <h3>Управление балансом</h3>
+                <label for="balance-id">ID пользователя:</label>
+                <input type="number" id="balance-id" name="id" placeholder="Введите ID" required>
+                <label for="balance-amount">Количество ⭐:</label>
+                <input type="number" id="balance-amount" name="amount" placeholder="Введите количество" required>
+                <button type="submit">Выдать баланс</button>
+            </form>
+
+            <form id="flags-form">
+                <h3>Управление флагами шансов</h3>
+                <label for="flag-select">Выберите флаг:</label>
+                <select id="flag-select" name="flag">
+                    <option value="100_per_rarity_super">100% на Супер-Легендарный</option>
+                    <option value="100_per_rarity">100% на Легендарный</option>
+                    <option value="double_chances">Удвоенные шансы</option>
+                    <option value="trible_chances">Утроенные шансы</option>
+                </select>
+                <label for="flag-value">Состояние:</label>
+                <select id="flag-value" name="value">
+                    <option value="true">Включить</option>
+                    <option value="false">Выключить</option>
+                </select>
+                <button type="submit">Установить флаг</button>
+            </form>
+
+            <form id="event-form">
+                <h3>Создать событие</h3>
+                <label for="event-name-input">Имя события:</label>
+                <input type="text" id="event-name-input" name="name" required>
+                <label for="event-time-input">Время события (ч.):</label>
+                <input type="number" id="event-time-input" name="time" required>
+                <label for="event-description-input">Описание:</label>
+                <textarea id="event-description-input" name="description" rows="3" required></textarea>
+                <label for="event-color-select">Цвет события:</label>
+                <select id="event-color-select" name="color">
+                    <option value="red">Красный</option>
+                    <option value="gold">Золотой</option>
+                    <option value="white">Белый</option>
+                    <option value="green">Зеленый</option>
+                    <option value="blue">Синий</option>
+                </select>
+                <button type="submit">Создать событие</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div id="result-modal" class="modal">
+    <div class="modal-content" id="modal-item-info">
+        <span class="modal-close">&times;</span>
+    </div>
+</div>
+
+<div class="item-list-container" id="item-list-container">
+    <h2 id="item-list-title"></h2>
+    <ul class="chances-list" id="chances-list"></ul>
+    <div class="item-list-grid" id="item-list"></div>
+</div>
+
+<script>
+    const ADMIN_ID = 1608641992;
+    const BOT_API_URL = 'http://192.168.0.153:5000/api'; // замените на ссылку вашего сервера с ботом!
+
+    const cases = [
+        {
+            id: 'we-opened',
+            name: 'We Openned!',
+            image: 'we_open.png',
+            price: 2500,
+            items: [
+                { name: 'Plush Pepe', file: 'GiftStickersByAutoGiftNews_1.gif', price: 900000, rarity_ru: 'Супер-Легендарный', rarity_color: 'super-legendary', chance: 0.2 },
+                { name: 'Heart Lockets', file: 'GiftStickersByAutoGiftNews_2.gif', price: 200000, rarity_ru: 'Легендарный', rarity_color: 'legendary', chance: 0.5 },
+                { name: 'Nail Bracelets', file: 'GiftStickersByAutoGiftNews_3.gif', price: 50000, rarity_ru: 'Легендарный', rarity_color: 'legendary', chance: 0.5 },
+                { name: 'Signet Ring', file: 'GiftStickersByAutoGiftNews_70.gif', price: 4627, rarity_ru: 'Эпический', rarity_color: 'epic', chance: 2.0 },
+                { name: 'Hanging Star', file: 'GiftStickersByAutoGiftNews_76.gif', price: 700, rarity_ru: 'Редкий', rarity_color: 'rare', chance: 15.0 },
+                { name: 'B-Day Candle', file: 'GiftStickersByAutoGiftNews_21.gif', price: 150, rarity_ru: 'Необычный', rarity_color: 'unusual', chance: 20.0 },
+                { name: 'Lol Pop', file: 'GiftStickersByAutoGiftNews_102.gif', price: 200, rarity_ru: 'Необычный', rarity_color: 'unusual', chance: 20.0 },
+                { name: 'B-Day Calendar', file: 'GiftStickersByAutoGiftNews_104.gif', price: 200, rarity_ru: 'Необычный', rarity_color: 'unusual', chance: 20.0 },
+                { name: 'NY Snake', file: 'GiftStickersByAutoGiftNews_51.gif', price: 200, rarity_ru: 'Необычный', rarity_color: 'unusual', chance: 21.8 }
+            ]
+        },
+        {
+            id: 'durov-farm',
+            name: 'Durov Cap Farm',
+            image: 'durovfarm.png',
+            price: 800,
+            items: [
+                { name: 'Durov Cap', file: 'GiftStickersByAutoGiftNews_77.gif', price: 100000, rarity_ru: 'Супер-Легендарный', rarity_color: 'super-legendary', chance: 0.2 },
+                { name: 'Nail Bracelets', file: 'GiftStickersByAutoGiftNews_3.gif', price: 33000, rarity_ru: 'Легендарный', rarity_color: 'legendary', chance: 0.5 },
+                { name: 'Heroic Helmets', file: 'GiftStickersByAutoGiftNews_6.gif', price: 20000, rarity_ru: 'Легендарный', rarity_color: 'legendary', chance: 0.5 },
+                { name: 'Ion Gems', file: 'GiftStickersByAutoGiftNews_7.gif', price: 10000, rarity_ru: 'Легендарный', rarity_color: 'legendary', chance: 0.5 },
+                { name: 'Neko Helmets', file: 'GiftStickersByAutoGiftNews_8.gif', price: 3555, rarity_ru: 'Эпический', rarity_color: 'epic', chance: 3.0 },
+                { name: 'Vintage Cigars', file: 'GiftStickersByAutoGiftNews_84.gif', price: 2805, rarity_ru: 'Эпический', rarity_color: 'epic', chance: 3.0 },
+                { name: 'Unusual items', file: 'GiftStickersByAutoGiftNews_21.gif', price: '150-200', rarity_ru: 'Необычный', rarity_color: 'unusual', chance: 15.0 },
+                { name: 'Common items', file: 'GiftStickersByAutoGiftNews_10.gif', price: '15-100', rarity_ru: 'Обычный', rarity_color: 'common', chance: 77.3 }
+            ]
+        },
+        {
+            id: 'heroic-helmet-farm',
+            name: 'Heroic Helmet Farm',
+            image: 'heroicfarm.png',
+            price: 600,
+            items: [
+                { name: 'Heroic Helmets', file: 'GiftStickersByAutoGiftNews_6.gif', price: 20000, rarity_ru: 'Легендарный', rarity_color: 'legendary', chance: 1.5 },
+                { name: 'Vintage Cigars', file: 'GiftStickersByAutoGiftNews_84.gif', price: 2805, rarity_ru: 'Эпический', rarity_color: 'epic', chance: 7.0 },
+                { name: 'Scared Cats', file: 'GiftStickersByAutoGiftNews_8.gif', price: 3525, rarity_ru: 'Эпический', rarity_color: 'epic', chance: 7.0 },
+                { name: 'Swiss Watch', file: 'GiftStickersByAutoGiftNews_69.gif', price: 3000, rarity_ru: 'Эпический', rarity_color: 'epic', chance: 7.0 },
+                { name: 'Signet Ring', file: 'GiftStickersByAutoGiftNews_70.gif', price: 2627, rarity_ru: 'Эпический', rarity_color: 'epic', chance: 7.0 },
+                { name: 'Hanging Star', file: 'GiftStickersByAutoGiftNews_76.gif', price: 700, rarity_ru: 'Редкий', rarity_color: 'rare', chance: 35.0 },
+                { name: 'Unusual items', file: 'GiftStickersByAutoGiftNews_21.gif', price: '150-200', rarity_ru: 'Необычный', rarity_color: 'unusual', chance: 25.0 },
+                { name: 'Common items', file: 'GiftStickersByAutoGiftNews_10.gif', price: '15-100', rarity_ru: 'Обычный', rarity_color: 'common', chance: 15.5 }
+            ]
+        }
+    ];
+
+    let currentCase = null;
+    let telegramUser = null;
+    let userBalance = 0;
+    let userInventory = [];
+    let userStats = { cases_opened: 0, best_drop: null, case_open_stats: {} };
+    let activeEvent = null;
+    let activeFlags = {};
+
+    const mainHeader = document.querySelector('.main-header');
+    const balanceInfo = document.getElementById('balance-info');
+    const balanceValue = document.getElementById('balance-value');
+    const welcomeMessage = document.getElementById('welcome-message');
+    const casesTitle = document.getElementById('cases-title');
+
+    const navLinks = document.querySelectorAll('.nav-menu a');
+    const logoLink = document.getElementById('logo-link');
+    const adminLink = document.getElementById('admin-link');
+    const allSections = document.querySelectorAll('.content-section');
+
+    const eventSection = document.getElementById('event-section');
+    const eventContainer = document.getElementById('event-container');
+    const eventName = document.getElementById('event-name');
+    const eventDescription = document.getElementById('event-description');
+    const eventTime = document.getElementById('event-time');
+
+    const casesSection = document.getElementById('cases-section');
+    const caseGallery = document.getElementById('case-gallery');
+
+    const rouletteSection = document.getElementById('roulette-section');
+    const rouletteCaseTitle = document.getElementById('roulette-case-title');
+    const rouletteItems = document.querySelector('.roulette-items');
+    const openBtn = document.getElementById('open-btn');
+    const openBtnPrice = document.getElementById('open-btn-price');
+    const backButton = document.getElementById('back-button');
+
+    const resultModal = document.getElementById('result-modal');
+    const modalItemInfo = document.getElementById('modal-item-info');
+    const itemListContainer = document.getElementById('item-list-container');
+    const itemListTitle = document.getElementById('item-list-title');
+    const itemList = document.getElementById('item-list');
+    const chancesList = document.getElementById('chances-list');
+
+    const inventorySection = document.getElementById('inventory-section');
+    const inventoryGrid = document.getElementById('inventory-grid');
+    const inventoryEmptyMessage = document.getElementById('inventory-empty-message');
+
+    const profileSection = document.getElementById('profile-section');
+    const profilePhoto = document.getElementById('profile-photo');
+    const profileId = document.getElementById('profile-id');
+    const profileName = document.getElementById('profile-name');
+    const profileBalance = document.getElementById('profile-balance');
+    const statCasesOpened = document.getElementById('stat-cases-opened');
+    const statBestDrop = document.getElementById('stat-best-drop');
+    const statFavoriteCase = document.getElementById('stat-favorite-case');
+
+    const adminSection = document.getElementById('admin-section');
+    const balanceForm = document.getElementById('balance-form');
+    const flagsForm = document.getElementById('flags-form');
+    const eventForm = document.getElementById('event-form');
+    
+    async function fetchData() {
+        if (!telegramUser) return;
+        try {
+            const response = await fetch(`${BOT_API_URL}/get_user_data?user_id=${telegramUser.id}`);
+            if (!response.ok) throw new Error('Failed to fetch user data');
+            const data = await response.json();
+            
+            userBalance = data.user_data.balance;
+            userInventory = data.user_data.inventory;
+            userStats = data.user_data.stats;
+            activeEvent = data.event;
+            activeFlags = data.flags;
+
+            updateBalanceDisplay();
+            displayEvent();
+
+            if (currentCase) {
+                populateRoulette(currentCase.items);
+                populateItemList(currentCase.items);
+                populateChancesList(currentCase.items);
+            }
+
+        } catch (error) {
+            console.error('Error fetching data:', error);
+        }
+    }
+
+    function getModifiedChances(items) {
+        let modifiedItems = items.map(item => ({ ...item }));
+
+        if (activeFlags['100_per_rarity_super']) {
+            modifiedItems.forEach(item => {
+                if (item.rarity_color === 'super-legendary') {
+                    item.chance = 100;
+                } else {
+                    item.chance = 0;
+                }
+            });
+            return modifiedItems;
+        }
+
+        if (activeFlags['100_per_rarity']) {
+            modifiedItems.forEach(item => {
+                if (item.rarity_color === 'legendary' || item.rarity_color === 'super-legendary') {
+                    item.chance = 100;
+                } else {
+                    item.chance = 0;
+                }
+            });
+            return modifiedItems;
+        }
+
+        let totalChanceMultiplier = 1;
+        if (activeFlags['trible_chances']) {
+            totalChanceMultiplier = 3;
+        } else if (activeFlags['double_chances']) {
+            totalChanceMultiplier = 2;
+        }
+
+        if (totalChanceMultiplier > 1) {
+            const rareAndAbove = modifiedItems.filter(item => ['super-legendary', 'legendary', 'epic', 'rare'].includes(item.rarity_color));
+            const commonAndUnusual = modifiedItems.filter(item => ['common', 'unusual'].includes(item.rarity_color));
+
+            const totalRareAndAboveChance = rareAndAbove.reduce((sum, item) => sum + item.chance, 0);
+            const totalCommonAndUnusualChance = commonAndUnusual.reduce((sum, item) => sum + item.chance, 0);
+
+            rareAndAbove.forEach(item => {
+                item.chance *= totalChanceMultiplier;
+            });
+
+            const newTotalRareAndAboveChance = rareAndAbove.reduce((sum, item) => sum + item.chance, 0);
+            const difference = newTotalRareAndAboveChance - totalRareAndAboveChance;
+
+            const adjustedCommonAndUnusualChance = Math.max(0, totalCommonAndUnusualChance - difference);
+            const adjustmentRatio = totalCommonAndUnusualChance > 0 ? adjustedCommonAndUnusualChance / totalCommonAndUnusualChance : 0;
+
+            commonAndUnusual.forEach(item => {
+                item.chance *= adjustmentRatio;
+            });
+
+            modifiedItems = [...rareAndAbove, ...commonAndUnusual];
+        }
+
+        return modifiedItems;
+    }
+
+    function createItemElement(item) {
+        const card = document.createElement('div');
+        card.classList.add('item-card', item.rarity_color);
+        card.innerHTML = `
+            <img src="${item.file}" alt="${item.name}" class="item-gif">
+            <div class="item-name">${item.name}</div>
+            <div class="item-price">${typeof item.price === 'number' ? item.price : item.price} ⭐</div>
+        `;
+        return card;
+    }
+
+    function populateCaseGallery() {
+        caseGallery.innerHTML = '';
+        cases.forEach(caseItem => {
+            const card = document.createElement('div');
+            card.classList.add('case-card');
+            card.dataset.caseId = caseItem.id;
+            card.innerHTML = `
+                <img src="${caseItem.image}" alt="${caseItem.name}">
+                <h3>${caseItem.name}</h3>
+                <p>${caseItem.price} ⭐</p>
+            `;
+            card.addEventListener('click', () => showCaseDetails(caseItem.id));
+            caseGallery.appendChild(card);
+        });
+    }
+
+    function showCaseDetails(caseId) {
+        currentCase = cases.find(c => c.id === caseId);
+        if (!currentCase) {
+            alert('Кейс не найден!');
+            return;
+        }
+
+        switchSection('roulette');
+
+        rouletteCaseTitle.textContent = currentCase.name;
+        openBtnPrice.textContent = currentCase.price;
+
+        populateRoulette(currentCase.items);
+        populateItemList(currentCase.items);
+        populateChancesList(currentCase.items);
+        itemListTitle.textContent = `В кейсе "${currentCase.name}":`;
+    }
+
+    function getRandomItemByChance(items) {
+        const totalChance = items.reduce((sum, item) => sum + item.chance, 0);
+        let random = Math.random() * totalChance;
+
+        for (let i = 0; i < items.length; i++) {
+            if (random < items[i].chance) {
+                return items[i];
+            }
+            random -= items[i].chance;
+        }
+        
+        return items[items.length - 1];
+    }
+
+    function populateRoulette(items) {
+        rouletteItems.innerHTML = '';
+        const itemsToDisplay = [];
+        const modifiedItems = getModifiedChances(items);
+        for (let i = 0; i < 50; i++) {
+            const randomItem = getRandomItemByChance(modifiedItems);
+            itemsToDisplay.push(randomItem);
+        }
+        itemsToDisplay.forEach(item => rouletteItems.appendChild(createItemElement(item)));
+    }
+
+    function populateItemList(items) {
+        itemList.innerHTML = '';
+        const modifiedItems = getModifiedChances(items);
+        const totalModifiedChance = modifiedItems.reduce((sum, item) => sum + item.chance, 0);
+
+        modifiedItems.forEach(item => {
+            const card = document.createElement('div');
+            card.classList.add('item-list-card', item.rarity_color);
+            const actualChance = (item.chance / totalModifiedChance) * 100;
+            card.innerHTML = `
+                <img src="${item.file}" alt="${item.name}" class="item-gif">
+                <div class="item-name">${item.name}</div>
+                <div class="item-price">${typeof item.price === 'number' ? item.price : item.price} ⭐</div>
+                <div class="item-chance">${actualChance.toFixed(2)}%</div>
+            `;
+            itemList.appendChild(card);
+        });
+    }
+
+    function populateChancesList(items) {
+        chancesList.innerHTML = '';
+        const rarityChances = {};
+        const modifiedItems = getModifiedChances(items);
+        const totalModifiedChance = modifiedItems.reduce((sum, item) => sum + item.chance, 0);
+
+        modifiedItems.forEach(item => {
+            if (!rarityChances[item.rarity_ru]) {
+                rarityChances[item.rarity_ru] = {
+                    chance: 0,
+                    color: item.rarity_color
+                };
+            }
+            rarityChances[item.rarity_ru].chance += item.chance;
+        });
+
+        for (const rarity in rarityChances) {
+            const li = document.createElement('li');
+            const actualChance = (rarityChances[rarity].chance / totalModifiedChance) * 100;
+            li.textContent = `${rarity}: ${actualChance.toFixed(2)}%`;
+            li.classList.add(`chance-${rarityChances[rarity].color}`);
+            chancesList.appendChild(li);
+        }
+    }
+
+    async function openCase() {
+        if (!currentCase) return;
+
+        openBtn.disabled = true;
+
+        try {
+            const response = await fetch(`${BOT_API_URL}/open_case`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    user_id: telegramUser.id,
+                    case_id: currentCase.id,
+                    cases_data: cases
+                }),
+            });
+
+            if (!response.ok) {
+                const errorData = await response.json();
+                throw new Error(errorData.error || 'Ошибка при открытии кейса');
+            }
+
+            const data = await response.json();
+            const winningItem = data.winning_item;
+            userBalance = data.new_balance;
+
+            updateBalanceDisplay();
+            
+            const finalPosition = 25;
+            const newItems = [];
+            for (let i = 0; i < finalPosition; i++) {
+                newItems.push(getRandomItemByChance(currentCase.items));
+            }
+            newItems.push(winningItem);
+            for (let i = finalPosition + 1; i < 50; i++) {
+                newItems.push(getRandomItemByChance(currentCase.items));
+            }
+
+            rouletteItems.innerHTML = '';
+            newItems.forEach((item) => {
+                const card = createItemElement(item);
+                rouletteItems.appendChild(card);
+            });
+
+            const itemWidth = rouletteItems.querySelector('.item-card').offsetWidth + 20;
+            const offset = (rouletteItems.offsetWidth / 2) - (itemWidth / 2);
+            const finalTranslateX = -((finalPosition * itemWidth) - offset);
+
+            rouletteItems.style.transition = 'transform 6s cubic-bezier(0.25, 1, 0.5, 1)';
+            rouletteItems.style.transform = `translateX(${finalTranslateX}px)`;
+
+            setTimeout(() => {
+                openBtn.disabled = false;
+                modalItemInfo.innerHTML = `
+                    <span class="modal-close" onclick="closeModal()">&times;</span>
+                    <img src="${winningItem.file}" alt="${winningItem.name}" class="item-gif">
+                    <h2>${winningItem.name}</h2>
+                    <p>${winningItem.rarity_ru}, ${typeof winningItem.price === 'number' ? winningItem.price : winningItem.price} ⭐</p>
+                `;
+                modalItemInfo.classList.add(`modal-${winningItem.rarity_color}`);
+                resultModal.style.display = 'flex';
+
+                rouletteItems.style.transition = 'none';
+                rouletteItems.style.transform = 'translateX(0)';
+                populateRoulette(currentCase.items);
+                fetchData();
+
+            }, 6000);
+
+        } catch (error) {
+            openBtn.disabled = false;
+            alert(error.message);
+            console.error('Error opening case:', error);
+        }
+    }
+
+    function closeModal() {
+        resultModal.style.display = 'none';
+        modalItemInfo.className = 'modal-content';
+    }
+
+    function updateBalanceDisplay() {
+        balanceValue.textContent = userBalance;
+    }
+
+    function switchSection(sectionId) {
+        allSections.forEach(section => {
+            section.style.display = 'none';
+        });
+
+        const targetSection = document.getElementById(`${sectionId}-section`);
+        if (targetSection) {
+            targetSection.style.display = 'block';
+            if (sectionId === 'cases') {
+                itemListContainer.style.display = 'none';
+            } else if (sectionId === 'roulette') {
+                itemListContainer.style.display = 'block';
+            } else if (sectionId === 'admin') {
+                itemListContainer.style.display = 'none';
+            } else {
+                itemListContainer.style.display = 'none';
+            }
+        }
+    }
+
+    function renderInventory() {
+        inventoryGrid.innerHTML = '';
+        if (userInventory.length === 0) {
+            inventoryEmptyMessage.style.display = 'block';
+        } else {
+            inventoryEmptyMessage.style.display = 'none';
+            userInventory.forEach(item => {
+                const card = document.createElement('div');
+                card.classList.add('item-list-card', item.rarity_color);
+                card.innerHTML = `
+                    <img src="${item.file}" alt="${item.name}" class="item-gif">
+                    <div class="item-name">${item.name}</div>
+                    <div class="item-price">${typeof item.price === 'number' ? item.price : item.price} ⭐</div>
+                `;
+                inventoryGrid.appendChild(card);
+            });
+        }
+    }
+
+    function renderProfile() {
+        if (!telegramUser) return;
+
+        profileId.textContent = telegramUser.id;
+        profileName.textContent = telegramUser.first_name || 'Пользователь';
+        profileBalance.textContent = userBalance;
+
+        if (telegramUser.photo_url) {
+            profilePhoto.src = telegramUser.photo_url;
+        } else {
+            profilePhoto.src = 'https://via.placeholder.com/120?text=No+Photo';
+        }
+
+        statCasesOpened.textContent = userStats.cases_opened;
+        statBestDrop.textContent = userStats.best_drop ? `${userStats.best_drop.name} (${userStats.best_drop.price} ⭐)` : 'Нет';
+
+        let maxOpened = 0;
+        let favoriteCaseName = 'Нет';
+        for (const caseId in userStats.case_open_stats) {
+            if (userStats.case_open_stats[caseId] > maxOpened) {
+                maxOpened = userStats.case_open_stats[caseId];
+                const caseItem = cases.find(c => c.id === caseId);
+                favoriteCaseName = caseItem ? caseItem.name : 'Неизвестно';
+            }
+        }
+        statFavoriteCase.textContent = favoriteCaseName;
+    }
+    
+    function displayEvent() {
+        if (!activeEvent) {
+            eventSection.style.display = 'none';
+            return;
+        }
+
+        eventSection.style.display = 'block';
+        eventName.textContent = activeEvent.name;
+        eventDescription.textContent = activeEvent.description;
+        eventTime.textContent = `Осталось: ${activeEvent.time} ч.`;
+        
+        const colors = {
+            red: '#ff0055',
+            gold: '#ffc107',
+            white: '#e0e0e0',
+            green: '#4caf50',
+            blue: '#2196f3'
+        };
+        const color = colors[activeEvent.color] || colors.red;
+
+        eventContainer.style.setProperty('--color-event', color);
+        eventContainer.style.setProperty('--color-event-shadow', `${color}80`);
+    }
+
+    openBtn.addEventListener('click', openCase);
+    backButton.addEventListener('click', () => switchSection('cases'));
+
+    navLinks.forEach(link => {
+        link.addEventListener('click', (e) => {
+            e.preventDefault();
+            const section = e.target.dataset.section;
+            if (section === 'upgrade') {
+                alert('Скоро...');
+            } else {
+                switchSection(section);
+                if (section === 'inventory') {
+                    renderInventory();
+                } else if (section === 'profile') {
+                    renderProfile();
+                }
+            }
+        });
+    });
+
+    logoLink.addEventListener('click', (e) => {
+        e.preventDefault();
+        switchSection('cases');
+    });
+    
+    balanceForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const userId = document.getElementById('balance-id').value;
+        const amount = parseInt(document.getElementById('balance-amount').value);
+        try {
+            const response = await fetch(`${BOT_API_URL}/admin/give_balance`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ admin_id: telegramUser.id, user_id: userId, amount: amount })
+            });
+            const result = await response.json();
+            if (result.success) {
+                alert('Баланс успешно выдан!');
+            } else {
+                alert(`Ошибка: ${result.error}`);
+            }
+            fetchData();
+        } catch (error) { alert('Ошибка при отправке запроса.'); }
+    });
+
+    flagsForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const flag = document.getElementById('flag-select').value;
+        const value = document.getElementById('flag-value').value;
+        try {
+            const response = await fetch(`${BOT_API_URL}/admin/set_flags`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ admin_id: telegramUser.id, flag: flag, value: value })
+            });
+            const result = await response.json();
+            if (result.success) {
+                alert('Флаги успешно обновлены!');
+            } else {
+                alert(`Ошибка: ${result.error}`);
+            }
+            fetchData();
+        } catch (error) { alert('Ошибка при отправке запроса.'); }
+    });
+
+    eventForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const event_data = {
+            name: document.getElementById('event-name-input').value,
+            time: document.getElementById('event-time-input').value,
+            description: document.getElementById('event-description-input').value,
+            color: document.getElementById('event-color-select').value
+        };
+        try {
+            const response = await fetch(`${BOT_API_URL}/admin/create_event`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ admin_id: telegramUser.id, event_data: event_data })
+            });
+            const result = await response.json();
+            if (result.success) {
+                alert('Событие успешно создано!');
+            } else {
+                alert(`Ошибка: ${result.error}`);
+            }
+            fetchData();
+        } catch (error) { alert('Ошибка при отправке запроса.'); }
+    });
+
+    function initApp() {
+        if (window.Telegram && window.Telegram.WebApp) {
+            const initData = Telegram.WebApp.initDataUnsafe;
+            if (initData.user) {
+                telegramUser = initData.user;
+                casesTitle.textContent = `Добро пожаловать, ${telegramUser.first_name || 'Пользователь'}!`;
+                
+                mainHeader.style.display = 'flex';
+                balanceInfo.style.display = 'flex';
+                
+                if (telegramUser.id === ADMIN_ID) {
+                    adminLink.style.display = 'block';
+                }
+
+                fetchData();
+                switchSection('cases');
+                populateCaseGallery();
+            } else {
+                welcomeMessage.style.display = 'block';
+            }
+        } else {
+            welcomeMessage.style.display = 'block';
+        }
+        
+        setInterval(fetchData, 5000);
+    }
+
+    document.addEventListener('DOMContentLoaded', initApp);
+
+    window.closeModal = closeModal;
+    window.addEventListener('click', (event) => {
+        if (event.target === resultModal) {
+            closeModal();
+        }
+    });
+
+</script>
+
+</body>
+</html>
